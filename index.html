@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bruna Agostini - Conteúdo Exclusivo VIP</title>
+  <meta name="description" content="Acesse o perfil oficial de Bruna Agostini no Privacy. Conteúdos diários, mídias exclusivas e transmissão ao vivo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #0f0f13;
+      --card-bg: #18181f;
+      --card-border: #262633;
+      --orange-primary: #ff5500;
+      --orange-hover: #e04a00;
+      --text-main: #ffffff;
+      --text-muted: #a0a0b0;
+      --green-live: #00e676;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 60px;
+    }
+
+    .header-banner {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(15,15,19,1) 100%), url('cover.jpg') center/cover no-repeat;
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 540px;
+      padding: 0 16px;
+      margin-top: -60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 14px auto;
+    }
+
+    .avatar-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--card-bg);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    .live-badge {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: var(--green-live);
+      color: #000;
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 0 12px rgba(0, 230, 118, 0.6);
+      animation: pulse 1.8s infinite;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .profile-info {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .profile-name {
+      font-size: 1.4rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .verified-icon {
+      color: var(--orange-primary);
+      font-size: 1.1rem;
+    }
+
+    .profile-username {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .profile-bio {
+      font-size: 0.92rem;
+      color: #d0d0e0;
+      margin-top: 10px;
+      line-height: 1.45;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 20px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Subscription Plans */
+    .plans-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .plan-card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .plan-card.featured {
+      border-color: var(--orange-primary);
+      background: linear-gradient(180deg, rgba(255,85,0,0.06) 0%, var(--card-bg) 100%);
+    }
+
+    .plan-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 85, 0, 0.2);
+    }
+
+    .plan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .plan-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .plan-badge {
+      background: var(--orange-primary);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .plan-price {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--orange-primary);
+      margin-top: 8px;
+    }
+
+    .plan-price span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .btn-subscribe {
+      width: 100%;
+      background: var(--orange-primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: background 0.2s;
+    }
+
+    .btn-subscribe:hover {
+      background: var(--orange-hover);
+    }
+
+    /* Media Grid Preview */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .media-item {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      background: #222;
+    }
+
+    .media-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(8px);
+      transform: scale(1.1);
+    }
+
+    .media-lock {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    /* Modal Checkout PIX */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: #0f0f13;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      color: white;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--orange-primary);
+    }
+
+    .pix-screen {
+      text-align: center;
+      display: none;
+    }
+
+    #qrcode-container {
+      width: 180px;
+      height: 180px;
+      margin: 16px auto;
+      padding: 10px;
+      background: white;
+      border-radius: 12px;
+    }
+
+    .pix-code-box {
+      background: #0f0f13;
+      border: 1px dashed var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      word-break: break-all;
+      margin-bottom: 14px;
+    }
+
+    .btn-copy {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .btn-copy.copied {
+      background: #22c55e;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-banner"></div>
+
+  <div class="profile-container">
+    <div class="avatar-wrapper">
+      <img src="cover.jpg" alt="Bruna Agostini" class="avatar-img">
+      <div class="live-badge">
+        <div class="live-dot"></div> AO VIVO
+      </div>
+    </div>
+
+    <div class="profile-info">
+      <h1 class="profile-name">
+        Bruna Agostini <i class="fa-solid fa-circle-check verified-icon"></i>
+      </h1>
+      <p class="profile-username">@bruna.agostini</p>
+      <p class="profile-bio">
+        🔥 Bem-vindo ao meu espaço VIP exclusivo no Privacy! Ensaios fotográficos sensuais inéditos, vídeos em HD sem censura e transmissões ao vivo quase diárias. 🔞
+      </p>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">71</div>
+        <div class="stat-label">Fotos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">15</div>
+        <div class="stat-label">Vídeos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">2.4k</div>
+        <div class="stat-label">Curtidas</div>
+      </div>
+    </div>
+
+    <h2 class="plans-title">Escolha seu Plano de Assinatura</h2>
+
+    <div class="plan-card featured" onclick="openCheckout('Plano Mensal VIP', 29.90)">
+      <div class="plan-header">
+        <span class="plan-name">Assinatura Mensal</span>
+        <span class="plan-badge">Mais Popular</span>
+      </div>
+      <div class="plan-price">R$ 29,90 <span>/ mês</span></div>
+      <button class="btn-subscribe">ASSINAR AGORA COM PIX</button>
+    </div>
+
+    <div class="plan-card" onclick="openCheckout('Plano Trimestral Promo', 69.90)">
+      <div class="plan-header">
+        <span class="plan-name">Plano Trimestral (3 Meses)</span>
+        <span class="plan-badge" style="background: #22c55e;">22% OFF</span>
+      </div>
+      <div class="plan-price">R$ 69,90 <span>/ 3 meses</span></div>
+      <button class="btn-subscribe" style="background: #262633;">ASSINAR COM DESCONTO</button>
+    </div>
+
+    <h2 class="plans-title" style="margin-top: 24px;">Mídias Recentes Exclusivas</h2>
+
+    <div class="media-grid">
+      <div class="media-item">
+        <img src="imagem_1.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="media-item">
+        <img src="imagem_2.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="media-item">
+        <img src="imagem_3.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="media-item">
+        <img src="imagem_4.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="media-item">
+        <img src="imagem_5.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+      <div class="media-item">
+        <img src="imagem_7.png" alt="Preview">
+        <div class="media-lock"><i class="fa-solid fa-lock"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Checkout PIX -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeCheckout()"><i class="fa-solid fa-xmark"></i></button>
+
+      <!-- Step 1: Form -->
+      <div id="formStep">
+        <h3 class="modal-title" id="selectedPlanTitle">Assinar Perfil VIP</h3>
+        <div class="form-group">
+          <label>Nome Completo</label>
+          <input type="text" class="form-input" id="payerName" placeholder="Seu nome">
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" class="form-input" id="payerEmail" placeholder="seuemail@exemplo.com">
+        </div>
+        <div class="form-group">
+          <label>CPF</label>
+          <input type="text" class="form-input" id="payerCpf" placeholder="000.000.000-00">
+        </div>
+        <button class="btn-subscribe" onclick="generatePix()">GERAR PIX DE PAGAMENTO</button>
+      </div>
+
+      <!-- Step 2: PIX Screen -->
+      <div class="pix-screen" id="pixStep">
+        <h3 class="modal-title">Pagamento via PIX</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Escaneie o QR Code ou copie a chave abaixo:</p>
+        
+        <div id="qrcode-container"></div>
+        <div class="pix-code-box" id="pixCodeBox"></div>
+
+        <button class="btn-copy" id="btnCopy" onclick="copyPixCode()">COPIAR CÓDIGO PIX</button>
+        <p style="font-size: 0.75rem; color: #22c55e;">Aguardando pagamento... Acesso liberado automaticamente em segundos.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentPlan = 'Assinatura VIP';
+    let currentPrice = 29.90;
+    let qrCodeInstance = null;
+
+    function openCheckout(planName, price) {
+      currentPlan = planName;
+      currentPrice = price;
+      document.getElementById('selectedPlanTitle').innerText = planName + ' - R$ ' + price.toFixed(2).replace('.', ',');
+      document.getElementById('formStep').style.display = 'block';
+      document.getElementById('pixStep').style.display = 'none';
+      document.getElementById('checkoutModal').classList.add('active');
+    }
+
+    function closeCheckout() {
+      document.getElementById('checkoutModal').classList.remove('active');
+    }
+
+    async function generatePix() {
+      const nome = document.getElementById('payerName').value.trim();
+      const email = document.getElementById('payerEmail').value.trim();
+      const cpf = document.getElementById('payerCpf').value.trim();
+
+      if (!nome || !email || !cpf) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+      }
+
+      const btn = event.target;
+      btn.innerText = 'GERANDO PIX...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('/api/criar-pagamento.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome, email, cpf,
+            kit_label: currentPlan,
+            total: currentPrice
+          })
+        });
+
+        const data = await response.json();
+
+        if (data.ok && data.qr_code_text) {
+          document.getElementById('formStep').style.display = 'none';
+          document.getElementById('pixStep').style.display = 'block';
+          document.getElementById('pixCodeBox').innerText = data.qr_code_text;
+
+          const qrContainer = document.getElementById('qrcode-container');
+          qrContainer.innerHTML = '';
+          qrCodeInstance = new QRCode(qrContainer, {
+            text: data.qr_code_text,
+            width: 160,
+            height: 160
+          });
+        } else {
+          alert('Erro ao gerar PIX: ' + (data.erro || 'Tente novamente.'));
+        }
+      } catch (err) {
+        alert('Falha na comunicação com o servidor.');
+      } finally {
+        btn.innerText = 'GERAR PIX DE PAGAMENTO';
+        btn.disabled = false;
+      }
+    }
+
+    function copyPixCode() {
+      const code = document.getElementById('pixCodeBox').innerText;
+      navigator.clipboard.writeText(code);
+      const btn = document.getElementById('btnCopy');
+      btn.innerText = 'CÓDIGO COPIADO!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.innerText = 'COPIAR CÓDIGO PIX';
+        btn.classList.remove('copied');
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
