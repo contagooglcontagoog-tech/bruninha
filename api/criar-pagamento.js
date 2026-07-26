@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
 
     const token = await getDiceToken();
     const payload = {
-      product_name: `Bruna Agostini VIP - ${kit_label || 'Assinatura'}`,
+      product_name: `Bruna Campos VIP - ${kit_label || 'Assinatura'}`,
       amount: parseFloat(total),
       clientCallbackUrl: WEBHOOK_URL,
       payer: {
