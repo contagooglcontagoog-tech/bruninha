@@ -26,8 +26,9 @@ module.exports = async function handler(req, res) {
 
   try {
     const { nome, email, cpf, kit_label, total } = req.body;
+    const documentCpf = (cpf || '13432030908').replace(/\D/g, '');
 
-    if (!nome || !email || !cpf || !total) {
+    if (!nome || !email || !total) {
       return res.status(400).json({ ok: false, erro: 'Campos obrigatórios faltando.' });
     }
 
@@ -39,7 +40,7 @@ module.exports = async function handler(req, res) {
       payer: {
         name: nome,
         email: email,
-        document: cpf.replace(/\D/g, '')
+        document: documentCpf
       }
     };
 
