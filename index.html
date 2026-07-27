@@ -778,6 +778,15 @@
       }
     })();
 
+    // Ensure VSL Video Autoplay
+    document.addEventListener('DOMContentLoaded', function() {
+      const vsl = document.getElementById('vslVideo');
+      if (vsl) {
+        vsl.muted = true;
+        vsl.play().catch(() => {});
+      }
+    });
+
     function closeWelcomeModal() {
       document.getElementById('welcomeModal').classList.remove('active');
       const video = document.getElementById('vslVideo');
