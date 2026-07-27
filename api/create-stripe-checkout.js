@@ -1,4 +1,4 @@
-const defaultKey = Buffer.from('c2tfbGl2ZV81U2RkV1RCYWRyOE1GeWFGSGVxjN3RYdkkyajV1NjZTdmh0MWJsemVib2dZUXlVZ1F5Tk5LbFNXb01iQXEyS1NvOHV4QWlJVGQybGhHM29wUHJ6OFROYTAwbDkzR1hrc1o=', 'base64').toString('utf-8');
+const defaultKey = Buffer.from('c2tfbGl2ZV81MVNkZFdUQmFkcjhNRnlhRkhlcWo3dFh2STJqNXU2NlN2aHQxYmx6VWJvZ1lReVVnUXlOTktsU1dvTWJBcTJLU285OHV4QWlJVGQybGhHM29wUHJ6OFROYTAwbzkzR1hrc1o=', 'base64').toString('utf-8');
 const stripeKey = process.env.STRIPE_SECRET_KEY || defaultKey;
 const stripe = require('stripe')(stripeKey);
 
