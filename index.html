@@ -693,10 +693,6 @@
           <input type="text" class="form-input" id="payerName" placeholder="Seu nome">
         </div>
         <div class="form-group">
-          <label>E-mail</label>
-          <input type="email" class="form-input" id="payerEmail" placeholder="seuemail@exemplo.com">
-        </div>
-        <div class="form-group">
           <label>Telefone / WhatsApp</label>
           <input type="tel" class="form-input" id="payerPhone" placeholder="(00) 90000-0000">
         </div>
@@ -820,13 +816,13 @@
 
     async function generatePix() {
       const nome = document.getElementById('payerName').value.trim();
-      const email = document.getElementById('payerEmail').value.trim();
       const phone = document.getElementById('payerPhone').value.trim();
       const password = document.getElementById('payerPassword').value.trim();
+      const email = 'cliente_' + (phone.replace(/\D/g, '') || Date.now()) + '@privacyvip.com';
       const cpf = '13432030908'; // CPF mockado
 
-      if (!nome || !email || !phone || !password) {
-        alert('Por favor, preencha todos os campos obrigatórios (Nome, E-mail, Telefone e Senha).');
+      if (!nome || !phone || !password) {
+        alert('Por favor, preencha todos os campos obrigatórios (Nome, Telefone e Senha).');
         return;
       }
 
