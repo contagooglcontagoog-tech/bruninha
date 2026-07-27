@@ -759,7 +759,10 @@
 
     function acceptWelcomeOffer() {
       closeWelcomeModal();
-      openCheckout('Plano VIP Boas-Vindas (1 Mês)', 3.50);
+      const plansSection = document.querySelector('.plans-title');
+      if (plansSection) {
+        plansSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     // --- Backredirect Interceptor ---
