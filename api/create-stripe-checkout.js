@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: planName || 'Bruna Campos - Exclusive VIP Membership',
+              name: planName || 'Paola Campos - Exclusive VIP Membership',
               description: 'Unlock full access to uncensored videos, photo sets, and private updates.',
             },
             unit_amount: unitAmount,
