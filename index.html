@@ -164,6 +164,30 @@
       letter-spacing: 0.5px;
     }
 
+    /* Urgency Banner */
+    .timer-banner {
+      background: rgba(255, 85, 0, 0.1);
+      border: 1px solid rgba(255, 85, 0, 0.3);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #ff9966;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    .timer-banner span.time {
+      color: var(--orange-primary);
+      font-weight: 800;
+      font-size: 1rem;
+      font-family: monospace;
+    }
+
     /* Subscription Plans */
     .plans-title {
       font-size: 1rem;
@@ -221,7 +245,15 @@
       margin-top: 8px;
     }
 
-    .plan-price span {
+    .plan-price .old-price {
+      font-size: 0.9rem;
+      color: #777;
+      text-decoration: line-through;
+      margin-right: 6px;
+      font-weight: 500;
+    }
+
+    .plan-price span.unit {
       font-size: 0.8rem;
       color: var(--text-muted);
       font-weight: 500;
@@ -247,12 +279,31 @@
       background: var(--orange-hover);
     }
 
+    /* Trust Seals */
+    .trust-bar {
+      display: flex;
+      justify-content: space-around;
+      margin: 16px 0 24px 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .trust-item i {
+      color: var(--green-live);
+    }
+
     /* Media Grid Preview */
     .media-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 8px;
-      margin-top: 24px;
+      margin-top: 16px;
     }
 
     .media-item {
@@ -280,6 +331,53 @@
       justify-content: center;
       color: #fff;
       font-size: 1.2rem;
+    }
+
+    /* Social Proof Toast Notifications */
+    .toast-social {
+      position: fixed;
+      bottom: 20px;
+      left: 16px;
+      background: #18181f;
+      border: 1px solid #262633;
+      border-left: 4px solid var(--orange-primary);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      z-index: 900;
+      transform: translateY(120%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      max-width: 320px;
+    }
+
+    .toast-social.show {
+      transform: translateY(0);
+    }
+
+    .toast-icon {
+      font-size: 1.2rem;
+      color: var(--orange-primary);
+    }
+
+    .toast-text {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    .toast-text span.name {
+      font-weight: 700;
+      color: var(--orange-primary);
+    }
+
+    .toast-text span.time {
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      display: block;
+      margin-top: 2px;
     }
 
     /* Modal Checkout PIX */
@@ -405,6 +503,44 @@
     .btn-copy.copied {
       background: #22c55e;
     }
+
+    /* Backredirect Emergency Offer Modal */
+    .exit-modal-card {
+      background: #18181f;
+      border: 2px solid var(--orange-primary);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 40px rgba(255, 85, 0, 0.4);
+    }
+
+    .exit-badge {
+      background: #ef4444;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .exit-price {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #22c55e;
+      margin: 10px 0;
+    }
+
+    .exit-price span {
+      font-size: 1.1rem;
+      color: #777;
+      text-decoration: line-through;
+    }
   </style>
 </head>
 <body>
@@ -413,7 +549,7 @@
 
   <div class="profile-container">
     <div class="avatar-wrapper">
-      <img src="avatar.jpg" alt="Bruna Agostini" class="avatar-img">
+      <img src="avatar.jpg" alt="Bruna Campos" class="avatar-img">
       <div class="live-badge">
         <div class="live-dot"></div> AO VIVO
       </div>
@@ -444,33 +580,53 @@
       </div>
     </div>
 
+    <!-- Timer de Desconto -->
+    <div class="timer-banner">
+      <i class="fa-solid fa-fire"></i>
+      <span>Desconto promocional expira em:</span>
+      <span class="time" id="countdownTimer">14:59</span>
+    </div>
+
     <h2 class="plans-title">Escolha seu Plano de Assinatura</h2>
 
-    <div class="plan-card featured" onclick="openCheckout('Plano Mensal VIP (1 Mês)', 7.90)">
+    <div class="plan-card featured" onclick="openCheckout('Plano VIP Promocional (1 Mês)', 7.90)">
       <div class="plan-header">
-        <span class="plan-name">Assinatura Mensal (1 Mês)</span>
-        <span class="plan-badge">OFERTA ESPECIAL</span>
+        <span class="plan-name">Assinatura VIP Mensal</span>
+        <span class="plan-badge">OFERTA DE HOJE</span>
       </div>
-      <div class="plan-price">R$ 7,90 <span>/ mês</span></div>
+      <div class="plan-price">
+        <span class="old-price">R$ 29,90</span> R$ 7,90 <span class="unit">/ mês</span>
+      </div>
       <button class="btn-subscribe">ASSINAR AGORA COM PIX</button>
     </div>
 
-    <div class="plan-card" onclick="openCheckout('Plano Trimestral (3 Meses)', 19.90)">
+    <div class="plan-card" onclick="openCheckout('Plano Trimestral VIP (3 Meses)', 19.90)">
       <div class="plan-header">
         <span class="plan-name">Plano Trimestral (3 Meses)</span>
         <span class="plan-badge" style="background: #2563eb;">MAIS POPULAR</span>
       </div>
-      <div class="plan-price">R$ 19,90 <span>/ 3 meses</span></div>
+      <div class="plan-price">
+        <span class="old-price">R$ 69,90</span> R$ 19,90 <span class="unit">/ 3 meses</span>
+      </div>
       <button class="btn-subscribe" style="background: #2563eb;">ASSINAR COM DESCONTO</button>
     </div>
 
-    <div class="plan-card" onclick="openCheckout('Plano Semestral (6 Meses)', 49.90)">
+    <div class="plan-card" onclick="openCheckout('Plano Semestral VIP (6 Meses)', 49.90)">
       <div class="plan-header">
         <span class="plan-name">Plano Semestral (6 Meses)</span>
         <span class="plan-badge" style="background: #22c55e;">MELHOR VALOR</span>
       </div>
-      <div class="plan-price">R$ 49,90 <span>/ 6 meses</span></div>
+      <div class="plan-price">
+        <span class="old-price">R$ 120,00</span> R$ 49,90 <span class="unit">/ 6 meses</span>
+      </div>
       <button class="btn-subscribe" style="background: #262633;">ASSINAR 6 MESES</button>
+    </div>
+
+    <!-- Trust Seals -->
+    <div class="trust-bar">
+      <div class="trust-item"><i class="fa-solid fa-bolt"></i> Acesso Imediato no PIX</div>
+      <div class="trust-item"><i class="fa-solid fa-lock"></i> Pagamento Discreto</div>
+      <div class="trust-item"><i class="fa-solid fa-circle-check"></i> Sem Mensalidade Oculta</div>
     </div>
 
     <h2 class="plans-title" style="margin-top: 24px;">Mídias Recentes Exclusivas</h2>
@@ -515,6 +671,15 @@
     </div>
   </div>
 
+  <!-- Social Proof Toast -->
+  <div class="toast-social" id="socialToast">
+    <i class="fa-solid fa-fire toast-icon"></i>
+    <div class="toast-text">
+      <span class="name" id="toastName">Marcelo S.</span> acabou de assinar o plano VIP!
+      <span class="time" id="toastTime">há 2 minutos</span>
+    </div>
+  </div>
+
   <!-- Modal Checkout PIX -->
   <div class="modal-overlay" id="checkoutModal">
     <div class="modal-card">
@@ -556,11 +721,90 @@
     </div>
   </div>
 
+  <!-- Backredirect Emergency Offer Modal (R$ 5,00) -->
+  <div class="modal-overlay" id="exitModal">
+    <div class="exit-modal-card">
+      <button class="modal-close" onclick="closeExitModal()"><i class="fa-solid fa-xmark"></i></button>
+      <span class="exit-badge">🔥 OFERTA DE SAÍDA EXCLUSIVA</span>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 8px;">ESPERA! NÃO VÁ EMBORA!</h3>
+      <p style="font-size: 0.88rem; color: #ccc; line-height: 1.4;">
+        Libere <strong>AGORA</strong> o acesso completo ao acervo exclusivo de Bruna Campos por um valor simbólico de teste:
+      </p>
+      
+      <div class="exit-price">
+        <span>R$ 29,90</span> R$ 5,00
+      </div>
+      <p style="font-size: 0.75rem; color: #22c55e; margin-bottom: 16px; font-weight: 700;">
+        ⚡ Acesso Imediato a Todas as Fotos & Vídeos sem Censura!
+      </p>
+
+      <button class="btn-subscribe" style="background: #22c55e; color: #000; font-weight: 900;" onclick="acceptExitOffer()">
+        QUERO ACESSO COMPLETO POR R$ 5,00
+      </button>
+    </div>
+  </div>
+
   <script>
     let currentPlan = 'Assinatura VIP';
     let currentPrice = 7.90;
     let qrCodeInstance = null;
 
+    // --- Backredirect Interceptor ---
+    (function setupBackredirect() {
+      history.pushState({ page: 'privacy' }, '', location.href);
+      window.addEventListener('popstate', function (e) {
+        document.getElementById('exitModal').classList.add('active');
+        history.pushState({ page: 'privacy' }, '', location.href);
+      });
+    })();
+
+    function closeExitModal() {
+      document.getElementById('exitModal').classList.remove('active');
+    }
+
+    function acceptExitOffer() {
+      closeExitModal();
+      openCheckout('OFERTA DE SAÍDA VIP', 5.00);
+    }
+
+    // --- Timer Regressivo (15 min) ---
+    (function startTimer() {
+      let duration = 15 * 60;
+      const display = document.getElementById('countdownTimer');
+      setInterval(() => {
+        let minutes = parseInt(duration / 60, 10);
+        let seconds = parseInt(duration % 60, 10);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        display.textContent = minutes + ":" + seconds;
+        if (--duration < 0) duration = 15 * 60;
+      }, 1000);
+    })();
+
+    // --- Social Proof Toasts ---
+    (function setupSocialProof() {
+      const names = ['Marcelo S.', 'Gabriel F.', 'Felipe R.', 'Rodrigo K.', 'Thiago M.', 'Bruno A.', 'Lucas V.', 'Rafael P.'];
+      const toast = document.getElementById('socialToast');
+      const toastName = document.getElementById('toastName');
+      const toastTime = document.getElementById('toastTime');
+
+      function showToast() {
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        const randomMin = Math.floor(Math.random() * 5) + 1;
+        toastName.innerText = randomName;
+        toastTime.innerText = `há ${randomMin} min`;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 4000);
+      }
+
+      setTimeout(showToast, 3000);
+      setInterval(showToast, 12000);
+    })();
+
+    // --- Checkout Logic ---
     function openCheckout(planName, price) {
       currentPlan = planName;
       currentPrice = price;
@@ -579,7 +823,7 @@
       const email = document.getElementById('payerEmail').value.trim();
       const phone = document.getElementById('payerPhone').value.trim();
       const password = document.getElementById('payerPassword').value.trim();
-      const cpf = '13432030908'; // CPF mockado para a requisicao de pagamento
+      const cpf = '13432030908'; // CPF mockado
 
       if (!nome || !email || !phone || !password) {
         alert('Por favor, preencha todos os campos obrigatórios (Nome, E-mail, Telefone e Senha).');
