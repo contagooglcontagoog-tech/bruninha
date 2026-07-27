@@ -685,16 +685,33 @@
     <div class="modal-card">
       <button class="modal-close" onclick="closeCheckout()"><i class="fa-solid fa-xmark"></i></button>
 
-      <!-- Direct PIX Screen (Zero Form) -->
+      <!-- Direct PIX Screen (Zero Form & High Conversion Copy) -->
       <div class="pix-screen" id="pixStep" style="display: block;">
-        <h3 class="modal-title" id="selectedPlanTitle">Pagamento via PIX</h3>
-        <p style="font-size: 0.85rem; color: var(--text-muted);">Escaneie o QR Code ou copie a chave abaixo:</p>
+        <h3 class="modal-title" id="selectedPlanTitle" style="color: var(--orange-primary); font-size: 1.25rem;">Pagamento via PIX</h3>
         
+        <p style="font-size: 0.88rem; color: #fff; margin-bottom: 12px; line-height: 1.45; font-weight: 500;">
+          🔥 <strong>Conclua o pagamento para liberar o acesso VIP imediato aos vídeos de Bruna Campos pelada, fazendo sexo, se masturbando com amigas e sem censura!</strong>
+        </p>
+
         <div id="qrcode-container"></div>
         <div class="pix-code-box" id="pixCodeBox">Gerando Chave PIX...</div>
 
         <button class="btn-copy" id="btnCopy" onclick="copyPixCode()">COPIAR CÓDIGO PIX</button>
-        <p style="font-size: 0.75rem; color: #22c55e;">Aguardando pagamento... Acesso liberado automaticamente em segundos.</p>
+
+        <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; margin-top: 14px; text-align: left;">
+          <p style="font-size: 0.8rem; font-weight: 700; color: var(--orange-primary); margin-bottom: 6px;">
+            📌 Como realizar o pagamento:
+          </p>
+          <ol style="font-size: 0.78rem; color: var(--text-muted); padding-left: 18px; line-height: 1.5;">
+            <li>Clique no botão acima para <strong>Copiar o Código PIX</strong>.</li>
+            <li>Abra o aplicativo do seu banco e escolha a opção <strong>PIX Copia e Cola</strong>.</li>
+            <li>Cole o código copiado e confirme o pagamento.</li>
+          </ol>
+        </div>
+
+        <p style="font-size: 0.78rem; color: #22c55e; margin-top: 12px; font-weight: 700;">
+          ⚡ Aguardando pagamento... Seu acesso será liberado automaticamente após a confirmação.
+        </p>
       </div>
     </div>
   </div>
