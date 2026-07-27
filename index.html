@@ -685,31 +685,13 @@
     <div class="modal-card">
       <button class="modal-close" onclick="closeCheckout()"><i class="fa-solid fa-xmark"></i></button>
 
-      <!-- Step 1: Form -->
-      <div id="formStep">
-        <h3 class="modal-title" id="selectedPlanTitle">Assinar Perfil VIP</h3>
-        <div class="form-group">
-          <label>Seu Nome</label>
-          <input type="text" class="form-input" id="payerName" placeholder="Seu nome">
-        </div>
-        <div class="form-group">
-          <label>Telefone / WhatsApp</label>
-          <input type="tel" class="form-input" id="payerPhone" placeholder="(00) 90000-0000">
-        </div>
-        <div class="form-group">
-          <label>Crie uma Senha de Acesso</label>
-          <input type="password" class="form-input" id="payerPassword" placeholder="Sua senha para acessar">
-        </div>
-        <button class="btn-subscribe" onclick="generatePix()">GERAR PIX DE PAGAMENTO</button>
-      </div>
-
-      <!-- Step 2: PIX Screen -->
-      <div class="pix-screen" id="pixStep">
-        <h3 class="modal-title">Pagamento via PIX</h3>
+      <!-- Direct PIX Screen (Zero Form) -->
+      <div class="pix-screen" id="pixStep" style="display: block;">
+        <h3 class="modal-title" id="selectedPlanTitle">Pagamento via PIX</h3>
         <p style="font-size: 0.85rem; color: var(--text-muted);">Escaneie o QR Code ou copie a chave abaixo:</p>
         
         <div id="qrcode-container"></div>
-        <div class="pix-code-box" id="pixCodeBox"></div>
+        <div class="pix-code-box" id="pixCodeBox">Gerando Chave PIX...</div>
 
         <button class="btn-copy" id="btnCopy" onclick="copyPixCode()">COPIAR CÓDIGO PIX</button>
         <p style="font-size: 0.75rem; color: #22c55e;">Aguardando pagamento... Acesso liberado automaticamente em segundos.</p>
@@ -835,55 +817,43 @@
       setInterval(showToast, 12000);
     })();
 
-    // --- Checkout Logic ---
-    function openCheckout(planName, price) {
+    // --- Checkout Logic (1-Click Instant PIX) ---
+    async function openCheckout(planName, price) {
       currentPlan = planName;
       currentPrice = price;
-      document.getElementById('selectedPlanTitle').innerText = planName + ' - R$ ' + price.toFixed(2).replace('.', ',');
-      document.getElementById('formStep').style.display = 'block';
-      document.getElementById('pixStep').style.display = 'none';
-      document.getElementById('checkoutModal').classList.add('active');
-    }
 
-    function closeCheckout() {
-      document.getElementById('checkoutModal').classList.remove('active');
-    }
+      const modal = document.getElementById('checkoutModal');
+      const title = document.getElementById('selectedPlanTitle');
+      const pixCodeBox = document.getElementById('pixCodeBox');
+      const qrContainer = document.getElementById('qrcode-container');
 
-    async function generatePix() {
-      const nome = document.getElementById('payerName').value.trim();
-      const phone = document.getElementById('payerPhone').value.trim();
-      const password = document.getElementById('payerPassword').value.trim();
-      const email = 'cliente_' + (phone.replace(/\D/g, '') || Date.now()) + '@privacyvip.com';
-      const cpf = '13432030908'; // CPF mockado
+      title.innerText = planName + ' - R$ ' + price.toFixed(2).replace('.', ',');
+      modal.classList.add('active');
 
-      if (!nome || !phone || !password) {
-        alert('Por favor, preencha todos os campos obrigatórios (Nome, Telefone e Senha).');
-        return;
-      }
+      pixCodeBox.innerText = 'Gerando Chave PIX...';
+      qrContainer.innerHTML = '<p style="color:#a0a0b0; font-size:0.82rem; padding: 40px 0;">Carregando QR Code...</p>';
 
-      const btn = event.target;
-      btn.innerText = 'GERANDO PIX...';
-      btn.disabled = true;
+      const mockNome = 'Assinante VIP';
+      const mockEmail = `cliente_${Date.now()}@privacyvip.com`;
+      const mockCpf = '13432030908';
 
       try {
         const response = await fetch('/api/criar-pagamento.js', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            nome, email, cpf,
-            kit_label: currentPlan,
-            total: currentPrice
+            nome: mockNome,
+            email: mockEmail,
+            cpf: mockCpf,
+            kit_label: planName,
+            total: price
           })
         });
 
         const data = await response.json();
 
         if (data.ok && data.qr_code_text) {
-          document.getElementById('formStep').style.display = 'none';
-          document.getElementById('pixStep').style.display = 'block';
-          document.getElementById('pixCodeBox').innerText = data.qr_code_text;
-
-          const qrContainer = document.getElementById('qrcode-container');
+          pixCodeBox.innerText = data.qr_code_text;
           qrContainer.innerHTML = '';
           qrCodeInstance = new QRCode(qrContainer, {
             text: data.qr_code_text,
@@ -891,29 +861,18 @@
             height: 160
           });
         } else {
-          alert('Erro ao gerar PIX: ' + (data.erro || 'Tente novamente.'));
+          pixCodeBox.innerText = 'Erro ao gerar PIX: ' + (data.erro || 'Tente novamente.');
+          qrContainer.innerHTML = '';
         }
       } catch (err) {
-        alert('Falha na comunicação com o servidor.');
-      } finally {
-        btn.innerText = 'GERAR PIX DE PAGAMENTO';
-        btn.disabled = false;
+        pixCodeBox.innerText = 'Falha ao conectar ao servidor de pagamento.';
+        qrContainer.innerHTML = '';
       }
     }
 
-    document.getElementById('payerPhone').addEventListener('input', function(e) {
-      let v = e.target.value.replace(/\D/g, '');
-      if (v.length > 11) v = v.substring(0, 11);
-      if (v.length > 6) {
-        e.target.value = `(${v.substring(0, 2)}) ${v.substring(2, 7)}-${v.substring(7)}`;
-      } else if (v.length > 2) {
-        e.target.value = `(${v.substring(0, 2)}) ${v.substring(2)}`;
-      } else if (v.length > 0) {
-        e.target.value = `(${v}`;
-      } else {
-        e.target.value = '';
-      }
-    });
+    function closeCheckout() {
+      document.getElementById('checkoutModal').classList.remove('active');
+    }
 
     function copyPixCode() {
       const code = document.getElementById('pixCodeBox').innerText;
